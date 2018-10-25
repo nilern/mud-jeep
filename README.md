@@ -14,7 +14,7 @@ mud-jeep provides a migration path back from Midje to clojure.test
 * [ ] Convert top-level `fact`/`facts` to `deftest` like `translate-midje` but using
       [rewrite-clj](https://github.com/xsc/rewrite-clj) as the CircleCI blog post recommends.
 
-# Support Lib
+# Normal Library Stuff
 
 * [ ] `fact` and `facts` that (unlike `testit` or `fudje`) can be nested and contain checking arrows in semi-arbitrary
       places. Macroexpand to `testing` and some more powerful form of `is` (like NUnit `Assert.That`).
