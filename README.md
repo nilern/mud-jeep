@@ -11,7 +11,7 @@ mud-jeep provides a migration path back from Midje to clojure.test
 
 # Source Conversion
 
-* [ ] Convert top-level `fact`/`facts` to `deftest` like `translate-midje` but using
+* [x] Convert top-level `fact`/`facts` to `deftest` like `translate-midje` but using
       [rewrite-clj](https://github.com/xsc/rewrite-clj) as the CircleCI blog post recommends.
 * [ ] Convert `midje.*` requires in ns-form to `mud-jeep.*` requires.
 
