@@ -19,7 +19,7 @@
         loc))
     loc))
 
-(def factoid? #{'fact 'facts})
+(def ^:dynamic factoid? #{'fact 'facts})
 
 ;; Originally copied from https://github.com/circleci/translate-midje:
 (defn munge-name [name]
