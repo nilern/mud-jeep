@@ -70,7 +70,11 @@
                           (zr/print-root converted w))
       :nop nil)))
 
-(defn convert-dir-inplace! [dir]
-  (doseq [^File file (file-seq dir)
-          :when (.isFile file)]
-    (convert-file-inplace! file)))
+(defn convert-dir-inplace!
+  ([dir] (convert-dir-inplace! dir {:shallow? false}))
+  ([dir {:keys [shallow?]}]
+   (doseq [^File file (if shallow?
+                        (.listFiles dir)
+                        (file-seq dir))
+           :when (.isFile file)]
+     (convert-file-inplace! file))))
