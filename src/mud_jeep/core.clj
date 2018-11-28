@@ -5,6 +5,9 @@
             [rewrite-clj.zip :as zr])
   (:import [java.io File]))
 
+(defn needs-conversion? [src-str]
+  (str/includes? src-str "midje.sweet"))
+
 (defn convert-ns [loc]
   (if (zr/list? loc)
     (let [op-loc (zr/down loc)]
@@ -55,15 +58,17 @@
     loc))
 
 (defn convert-file [file]
-  (->> file
-       zr/of-file
-       zr/up
-       (zr/map (comp convert-ns convert-factoid))))
+  (let [src-str (slurp file)]
+    (if (needs-conversion? src-str)
+      [:converted-zipper (->> (zr/of-string src-str) zr/up (zr/map (comp convert-ns convert-factoid)))]
+      [:nop])))
 
 (defn convert-file-inplace! [file]
-  (let [converted (convert-file file)]
-    (with-open [w (io/writer file)]
-      (zr/print-root converted w))))
+  (let [[tag converted] (convert-file file)]
+    (case tag
+      :converted-zipper (with-open [w (io/writer file)]
+                          (zr/print-root converted w))
+      :nop nil)))
 
 (defn convert-dir-inplace! [dir]
   (doseq [^File file (file-seq dir)
